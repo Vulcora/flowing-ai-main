@@ -1,0 +1,14 @@
+{
+  "name": "flowing-ai-main",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node bin/server.js",
+    "build:ui": "cd ui && npm run build"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "nanoid": "^5.0.9"
+  }
+}
