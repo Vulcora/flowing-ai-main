@@ -5,6 +5,7 @@ import { writeFileSync, existsSync, readFileSync, mkdirSync } from "fs";
 import { nanoid } from "nanoid";
 import { runGeneration, pipelineEvents } from "../lib/claude-runner.js";
 import { getBranch, listBranches } from "../lib/branches.js";
+import { scrapeWebsite } from "../lib/scraper.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT = join(__dirname, "../../output");
@@ -12,6 +13,26 @@ const OUTPUT = join(__dirname, "../../output");
 const router = Router();
 
 const projects = new Map();
+
+router.post("/scrape", async (req, res) => {
+  const { url } = req.body;
+  if (!url) {
+    return res.status(400).json({ error: "url required" });
+  }
+
+  try {
+    new URL(url);
+  } catch {
+    return res.status(400).json({ error: "Invalid URL format" });
+  }
+
+  try {
+    const result = await scrapeWebsite(url);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: `Scraping failed: ${err.message}` });
+  }
+});
 
 router.get("/branches", (req, res) => {
   res.json(listBranches());
