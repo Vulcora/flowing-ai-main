@@ -39,7 +39,7 @@ router.get("/branches", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { companyName, branchKey } = req.body;
+  const { companyName, branchKey, description, scrapedData, pages } = req.body;
 
   if (!companyName || !branchKey) {
     return res.status(400).json({ error: "companyName and branchKey required" });
@@ -50,18 +50,40 @@ router.post("/", (req, res) => {
     return res.status(400).json({ error: `Unknown branch: ${branchKey}` });
   }
 
+  const isMultiPage = Array.isArray(pages) && pages.length > 1;
+  const pageFiles = isMultiPage
+    ? pages.map((p) => `${p.slug === "index" ? "index" : p.slug}.html`)
+    : ["index.html"];
+
   const slug = `${companyName.toLowerCase().replace(/[^a-zåäö0-9]+/g, "-").replace(/-+$/, "")}-${nanoid(5)}`;
   const outputDir = join(OUTPUT, slug);
   mkdirSync(outputDir, { recursive: true });
   writeFileSync(join(outputDir, "pipeline.log"), "");
 
-  projects.set(slug, { status: "generating", companyName, branchKey });
+  projects.set(slug, {
+    status: "generating",
+    companyName,
+    branchKey,
+    description: description || "",
+    isMultiPage,
+    pages: pageFiles,
+    currentPage: null,
+  });
 
   res.json({ status: "generating", slug });
 
-  runGeneration(slug, companyName, branch, outputDir)
+  runGeneration(slug, companyName, branch, outputDir, {
+    description: description || "",
+    scrapedData: scrapedData || null,
+    pages: pages || [],
+    isMultiPage,
+    onPageStart: (pageName) => {
+      const project = projects.get(slug);
+      if (project) projects.set(slug, { ...project, currentPage: pageName });
+    },
+  })
     .then(() => {
-      projects.set(slug, { ...projects.get(slug), status: "done" });
+      projects.set(slug, { ...projects.get(slug), status: "done", currentPage: null });
     })
     .catch((err) => {
       console.error("Pipeline error:", err.message);
