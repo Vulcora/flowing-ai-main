@@ -27,6 +27,12 @@ $SERVICES
 ## Kundrecensioner
 $REVIEWS
 
+## Företagsbeskrivning (från ägaren)
+$DESCRIPTION
+
+## Information från befintlig hemsida
+$SCRAPED_INFO
+
 ## Instruktioner
 
 Skapa filen `$OUTPUT_DIR/site/index.html` — EN enda HTML-fil med ALL CSS och JS inline.
