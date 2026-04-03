@@ -60,6 +60,16 @@ Skapa filen `$OUTPUT_DIR/site/index.html` — EN enda HTML-fil med ALL CSS och J
 - INGEN placeholder-text ("Lorem ipsum") — allt ska vara realistisk svensk text
 - Sidan ska se ut som den är handgjord av en designer, INTE AI-genererad
 
+### Chattwidget (OBLIGATORISK):
+Lägg till följande script-tagg precis innan `</body>`:
+```html
+<script src="http://localhost:4000/widget.js"
+        crossorigin="anonymous"
+        data-api-key="tk_X1H52XerLxQ1kO9JlEG1uHosUn7wMizuzettvWSBzJg"
+        data-color="#4F46E5">
+</script>
+```
+
 ### Förbjudet:
 - Inga externa CSS/JS-filer
 - Inga ramverk (Bootstrap, Tailwind CDN etc)

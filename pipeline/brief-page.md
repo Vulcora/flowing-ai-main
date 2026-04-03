@@ -69,8 +69,11 @@ $PAGE_TYPE_INSTRUCTIONS
 - Om scrapad info finns: använd riktiga tjänster, priser, texter som grund
 - Om scrapad info saknas: skriv realistiskt innehåll baserat på bransch och företagsbeskrivning
 
+### Chattwidget (OBLIGATORISK):
+Footer-snippeten innehåller redan chattwidget-scriptet. Se till att footer inkluderas korrekt i slutet av `<body>`.
+
 ### Förbjudet:
-- Inga externa CSS/JS-filer (utöver shared.css)
+- Inga externa CSS/JS-filer (utöver shared.css och chattwidgeten)
 - Inga ramverk
 - Ingen placeholder/lorem ipsum text
 - Inga brutna bilder

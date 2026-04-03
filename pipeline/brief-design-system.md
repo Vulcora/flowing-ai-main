@@ -62,6 +62,14 @@ HTML-snippet för gemensam footer:
 - Företagsnamn och © 2026
 - Snabblänkar till alla sidor
 - Kontaktinfo (om tillgänglig)
+- OBLIGATORISKT: Inkludera följande chattwidget-script sist i footer.html:
+```html
+<script src="http://localhost:4000/widget.js"
+        crossorigin="anonymous"
+        data-api-key="tk_X1H52XerLxQ1kO9JlEG1uHosUn7wMizuzettvWSBzJg"
+        data-color="#4F46E5">
+</script>
+```
 
 ### Krav:
 - Inga ramverk (Bootstrap, Tailwind CDN etc)
